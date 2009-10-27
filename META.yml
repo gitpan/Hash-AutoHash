@@ -1,0 +1,34 @@
+---
+name: Hash-AutoHash
+version: 1.00
+author:
+  - 'Nat Goodman <natg@shore.net>'
+abstract: Object-oriented access to real and tied hashes
+license: perl
+resources:
+  license: http://dev.perl.org/licenses/
+build_requires:
+  Exporter: 0
+  Test::Deep: 0
+  Test::More: 0.88
+  Tie::Hash::MultiValue: 0
+requires:
+  Carp: 0
+  List::MoreUtils: 0.09
+  Scalar::Util: 1.01
+  Tie::Hash: 1
+  Tie::ToObject: 0
+configure_requires:
+  Module::Build: 0.34
+provides:
+  Hash::AutoHash:
+    file: lib/Hash/AutoHash.pm
+    version: 1.00
+  Hash::AutoHash::alias:
+    file: lib/Hash/AutoHash.pm
+  Hash::AutoHash::helper:
+    file: lib/Hash/AutoHash.pm
+generated_by: Module::Build version 0.34
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
