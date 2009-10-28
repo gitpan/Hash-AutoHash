@@ -51,7 +51,7 @@ my $builder = $class->new
 		      'Tie::ToObject' => 0,
 		     },
    add_to_cleanup      => [ 'Hash-AutoHash-*' ],
-   create_makefile_pl => 'traditional',
+   create_makefile_pl => 'passthrough',
   );
 
 $builder->create_build_script();

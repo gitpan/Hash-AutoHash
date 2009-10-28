@@ -1,5 +1,5 @@
 package Child;
-our $VERSION='Child.1.0';
+our $VERSION='1.00_2222';
 use strict;
 use Hash::AutoHash;
 our @ISA=qw(Hash::AutoHash);
@@ -33,7 +33,7 @@ sub child_function_not_exported {
 
 #################################################################################
 package Grandchild;
-our $VERSION='Grandchild.1.0';
+our $VERSION='1.00_3333';
 use strict;
 use Hash::AutoHash;
 our @ISA=qw(Child);

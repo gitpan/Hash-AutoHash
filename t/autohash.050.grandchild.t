@@ -64,6 +64,23 @@ ok($isa,'Grandchild isa: is UNIVERSAL');
 my $isa=isa Grandchild('not_defined');
 ok(!$isa,'Grandchild isa: isn\'t');
 
+# Test DOES in perls > 5.10. 
+# Note: $^V returns real string in perls > 5.10, and v-string in earlier perls
+#   regexp below fails in earlier perls. this is okay
+my($perl_main,$perl_minor)=$^V=~/^v(\d+)\.(\d+)/; # perl version
+if ($perl_main==5 && $perl_minor>=10) {
+  my $does=DOES Grandchild('Grandchild');
+  is($does,1,'DOES: is Grandchild');
+  my $does=DOES Grandchild('Grandchild');
+  is($does,1,'DOES: is Grandchild');
+  my $does=DOES Grandchild('Hash::AutoHash');
+  ok($does,'Grandchild DOES: is Hash::AutoHash');
+  my $does=DOES Grandchild('UNIVERSAL');
+  is($does,1,'DOES: is UNIVERSAL');
+  my $does=DOES Grandchild('not_defined');
+  ok(!$does,'DOES: isn\'t');
+}
+
 my $version=VERSION Grandchild;
 is($version,$Grandchild::VERSION,'Grandchild VERSION');
 

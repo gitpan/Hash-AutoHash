@@ -343,7 +343,7 @@ sub test_subclass_special_keys (*) {
   my @keys;
   {
     no strict 'refs';
-    @keys=(qw(import new can isa VERSION AUTOLOAD DESTROY),
+    @keys=(qw(import new can isa DOES VERSION AUTOLOAD DESTROY),
 	   @Hash::AutoHash::EXPORT_OK,@{$class.'::EXPORT_OK'});  
   }
   $autohash=new $class;

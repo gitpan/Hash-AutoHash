@@ -11,7 +11,7 @@ use Hash::AutoHash qw(autohash_new autohash_hash autohash_tie
 
 #################################################################################
 package Child;
-our $VERSION='Child.1.0';
+our $VERSION='1.00_1111';
 
 use strict;
 use Hash::AutoHash;

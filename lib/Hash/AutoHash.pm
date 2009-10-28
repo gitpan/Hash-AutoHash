@@ -1,5 +1,5 @@
 package Hash::AutoHash;
-our $VERSION='1.00';
+our $VERSION='1.01';
 
 #################################################################################
 #
@@ -82,6 +82,17 @@ sub isa {
   # called as function or class method. do regular 'isa' via base class
   return $class_or_self->SUPER::isa(@_);
 }
+sub DOES {			# in perl 5.10, UNIVERSAL provides this
+  my $class_or_self=shift;
+  if (ref $class_or_self) { 
+    # called as object method. access hash slot via AUTOLOAD
+    $AUTOLOAD='DOES';
+    return $class_or_self->AUTOLOAD(@_);
+  }
+  # called as function or class method. do regular 'DOES' via base class
+  # illegal and will die in perls < 5.10 
+  return $class_or_self->SUPER::DOES(@_);
+}
 sub VERSION {
   my $class_or_self=shift;
   if (ref $class_or_self) { 
@@ -139,7 +150,7 @@ sub AUTOLOAD {
 package Hash::AutoHash::helper;
 use strict;
 use Carp;
-use Scalar::Util qw(blessed readonly refaddr reftype weaken);
+use Scalar::Util qw(blessed readonly reftype);
 use List::MoreUtils qw(uniq);
 use Tie::ToObject;
 use vars qw(%SELF2HASH %SELF2OBJECT %SELF2EACH %CLASS2ANCESTORS %EXPORT_OK);
@@ -769,13 +780,14 @@ Special care is needed with methods inherited from UNIVERSAL (the base
 class of everything) and methods used implicitly by Perl to implement
 common features ('import', 'AUTOLOAD', 'DESTROY').
 
-UNIVERSAL defines three methods: 'can', 'isa', and 'VERSION'.  These
-are logically class methods, since they give the same result for every
-object in a given class, but the built-in implementation allows them
-to be invoked on objects. We have chosen to override the standard
-implementation: if the method is invoked on a class, we pass it to
-UNIVERSAL, but if it is invoked on an object, we interpret it as a
-request to access or change an element of the hash.
+UNIVERSAL defines four methods in perl 5.10 -- 'can', 'isa', 'DOES',
+and 'VERSION' -- and three is earlier versions -- 'can', 'isa', and
+'VERSION'.  These are logically class methods, since they give the
+same result for every object in a given class, but the built-in
+implementation allows them to be invoked on objects. We have chosen to
+override the standard implementation: if the method is invoked on a
+class, we pass it to UNIVERSAL, but if it is invoked on an object, we
+interpret it as a request to access or change an element of the hash.
 
 For example, the following two statements
 
@@ -1381,15 +1393,15 @@ progress on your bug as I make changes.
 
 =item * Overridden UNIVERSAL methods
 
-Hash::AutoHash overrides all methods inherited from UNIVERSAL
-(the base class of everything), namely 'can', 'isa', and
+Hash::AutoHash overrides all methods inherited from UNIVERSAL (the
+base class of everything), namely 'can', 'isa', 'DOES', and
 'VERSION'. These are logically class methods, since they give the same
 result for every object in a given class, but the built-in
 implementation allows them to be invoked on objects. Our
-implementation treats class and object invocations differently: if the method is
-invoked on a class, we pass it to UNIVERSAL, but if it is invoked on an
-object, we interpret it as a request to access or change an element of
-the underlying hash.
+implementation treats class and object invocations differently: if the
+method is invoked on a class, we pass it to UNIVERSAL, but if it is
+invoked on an object, we interpret it as a request to access or change
+an element of the underlying hash.
 
 This will break code that expects the UNIVERSAL methods
 to work in the standard way.  If this proves to be a problem, we

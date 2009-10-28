@@ -59,6 +59,19 @@ ok(!$isa,'Child isa: isn\'t');
 my $version=VERSION Child;
 is($version,$Child::VERSION,'Child VERSION');
 
+# Test DOES in perls > 5.10. 
+# Note: $^V returns real string in perls > 5.10, and v-string in earlier perls
+#   regexp below fails in earlier perls. this is okay
+my($perl_main,$perl_minor)=$^V=~/^v(\d+)\.(\d+)/; # perl version
+if ($perl_main==5 && $perl_minor>=10) {
+  my $does=DOES Child('Child');
+  is($does,1,'DOES: is Child');
+  my $does=DOES Child('UNIVERSAL');
+  is($does,1,'DOES: is UNIVERSAL');
+  my $does=DOES Child('not_defined');
+  ok(!$does,'DOES: isn\'t');
+}
+
 import Child qw(autohash_new);
 # NOTE: $autohash used as global in autohashUtil test functions. do NOT 'my' it!!
 $autohash=autohash_new();

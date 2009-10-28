@@ -1,5 +1,5 @@
 package TypicalChild;
-our $VERSION='TypicalChild.1.0';
+our $VERSION='1.00_4444';
 
 use strict;
 use Hash::AutoHash;

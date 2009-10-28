@@ -38,6 +38,21 @@ ok($isa,'TypicalChild isa: is UNIVERSAL');
 my $isa=isa TypicalChild('not_defined');
 ok(!$isa,'TypicalChild isa: isn\'t');
 
+# Test DOES in perls > 5.10. 
+# Note: $^V returns real string in perls > 5.10, and v-string in earlier perls
+#   regexp below fails in earlier perls. this is okay
+my($perl_main,$perl_minor)=$^V=~/^v(\d+)\.(\d+)/; # perl version
+if ($perl_main==5 && $perl_minor>=10) {
+  my $does=DOES TypicalChild('TypicalChild');
+  is($does,1,'DOES: is TypicalChild');
+  my $does=DOES TypicalChild('Hash::AutoHash');
+  ok($does,'TypicalChild DOES: is Hash::AutoHash');
+  my $does=DOES TypicalChild('UNIVERSAL');
+  is($does,1,'DOES: is UNIVERSAL');
+  my $does=DOES TypicalChild('not_defined');
+  ok(!$does,'DOES: isn\'t');
+}
+
 my $version=VERSION TypicalChild;
 is($version,$TypicalChild::VERSION,'TypicalChild VERSION');
 
@@ -66,7 +81,7 @@ use Test::Deep;	 # do it here to avoid breaking 'isa' tests above
   my @keys;
   {
     no strict 'refs';
-    @keys=(qw(import new can isa VERSION AUTOLOAD DESTROY),
+    @keys=(qw(import new can isa DOES VERSION AUTOLOAD DESTROY),
 	   @Hash::AutoHash::EXPORT_OK,@imports);  
   }
   my $child=new TypicalChild;

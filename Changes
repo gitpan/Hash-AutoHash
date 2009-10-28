@@ -3,3 +3,8 @@ Revision history for Hash-AutoHash
 1.00    2009-10-26
         First version, released on an unsuspecting world.
 
+1.01	2009-10-28
+	Fixed 'make test' - bug found by CPAN testers.
+	Fixed version number failure in testson perl 5.10 - bug found by CPAN testers.
+	Added DOES to special methods delegated to base class. Needed for perl 5.10, since
+	  DOES added to methods inherited from UNIVERSAL.

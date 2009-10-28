@@ -23,7 +23,7 @@ sub test_special_keys ($$) {
   cmp_deeply($actual,$correct,"tied. key=$key");
 }
 
-our @keys=(qw(import new can isa VERSION AUTOLOAD DESTROY),@Hash::AutoHash::EXPORT_OK);
+our @keys=(qw(import new can isa DOES VERSION AUTOLOAD DESTROY),@Hash::AutoHash::EXPORT_OK);
 # my @values=map {"value_$_"} @keys;
 for my $key (@keys) {
   my $value="value_$key";
