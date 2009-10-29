@@ -8,3 +8,9 @@ Revision history for Hash-AutoHash
 	Fixed version number failure in testson perl 5.10 - bug found by CPAN testers.
 	Added DOES to special methods delegated to base class. Needed for perl 5.10, since
 	  DOES added to methods inherited from UNIVERSAL.
+
+1.02	2009-10-29
+	Documentation changes only. 
+	  Changed module names AVP_Single, AVP_Multi to AVPairsSingle, AVPairsMulti
+          in SEE ALSO to better match CPAN naming style
+

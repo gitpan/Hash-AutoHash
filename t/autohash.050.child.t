@@ -66,10 +66,12 @@ my($perl_main,$perl_minor)=$^V=~/^v(\d+)\.(\d+)/; # perl version
 if ($perl_main==5 && $perl_minor>=10) {
   my $does=DOES Child('Child');
   is($does,1,'DOES: is Child');
+  my $does=DOES Child('Hash::AutoHash');
+  ok($does,'Child DOES: is Hash::AutoHash');
   my $does=DOES Child('UNIVERSAL');
   is($does,1,'DOES: is UNIVERSAL');
   my $does=DOES Child('not_defined');
-  ok(!$does,'DOES: isn\'t');
+  ok(!$does,'DOES: doesn\'t');
 }
 
 import Child qw(autohash_new);

@@ -78,7 +78,7 @@ if ($perl_main==5 && $perl_minor>=10) {
   my $does=DOES Grandchild('UNIVERSAL');
   is($does,1,'DOES: is UNIVERSAL');
   my $does=DOES Grandchild('not_defined');
-  ok(!$does,'DOES: isn\'t');
+  ok(!$does,'DOES: doesn\'t');
 }
 
 my $version=VERSION Grandchild;

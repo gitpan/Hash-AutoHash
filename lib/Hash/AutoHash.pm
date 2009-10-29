@@ -1,5 +1,5 @@
 package Hash::AutoHash;
-our $VERSION='1.01';
+our $VERSION='1.02';
 
 #################################################################################
 #
@@ -580,7 +580,7 @@ Hash::AutoHash - Object-oriented access to real and tied hashes
 
 =head1 VERSION
 
-Version 1.00
+Version 1.02
 
 =head1 SYNOPSIS
 
@@ -1365,7 +1365,7 @@ L<Hash::AsObject> alerted us to the danger of methods inherited from
 UNIVERSAL.
 
 L<Hash::AutoHash::Args>, L<Hash::AutoHash::MultiValued>,
-L<Hash::AutoHash::AVP_Single>, L<Hash::AutoHash::AVP_Multi>,
+L<Hash::AutoHash::AVPairsSingle>, L<Hash::AutoHash::AVPairsMulti>,
 L<Hash::AutoHash::Record> are subclasses each of which provides an
 object interface to a specific tied hash class.
 

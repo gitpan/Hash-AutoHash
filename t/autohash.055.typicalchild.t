@@ -50,7 +50,7 @@ if ($perl_main==5 && $perl_minor>=10) {
   my $does=DOES TypicalChild('UNIVERSAL');
   is($does,1,'DOES: is UNIVERSAL');
   my $does=DOES TypicalChild('not_defined');
-  ok(!$does,'DOES: isn\'t');
+  ok(!$does,'DOES: doesn\'t');
 }
 
 my $version=VERSION TypicalChild;

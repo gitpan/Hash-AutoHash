@@ -42,7 +42,7 @@ if ($perl_main==5 && $perl_minor>=10) {
   my $does=DOES Hash::AutoHash('UNIVERSAL');
   is($does,1,'DOES: is UNIVERSAL');
   my $does=DOES Hash::AutoHash('not_defined');
-  ok(!$does,'DOES: isn\'t');
+  ok(!$does,'DOES: doesn\'t');
 }
 
 my $version=VERSION Hash::AutoHash;

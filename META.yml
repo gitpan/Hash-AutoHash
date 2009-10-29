@@ -1,6 +1,6 @@
 ---
 name: Hash-AutoHash
-version: 1.01
+version: 1.02
 author:
   - 'Nat Goodman <natg@shore.net>'
 abstract: Object-oriented access to real and tied hashes
@@ -23,7 +23,7 @@ configure_requires:
 provides:
   Hash::AutoHash:
     file: lib/Hash/AutoHash.pm
-    version: 1.01
+    version: 1.02
   Hash::AutoHash::alias:
     file: lib/Hash/AutoHash.pm
   Hash::AutoHash::helper:
