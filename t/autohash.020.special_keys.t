@@ -3,7 +3,7 @@ use strict;
 use Carp;
 use Test::More;
 use Test::Deep;
-# use autohashUtil;
+use autohashUtil;
 require 'autohash.TieMV.pm';	# example tied hash class
 my $autohash;
 
@@ -23,7 +23,7 @@ sub test_special_keys ($$) {
   cmp_deeply($actual,$correct,"tied. key=$key");
 }
 
-our @keys=(qw(import new can isa DOES VERSION AUTOLOAD DESTROY),@Hash::AutoHash::EXPORT_OK);
+our @keys=(@COMMON_SPECIAL_KEYS,@Hash::AutoHash::EXPORT_OK);
 # my @values=map {"value_$_"} @keys;
 for my $key (@keys) {
   my $value="value_$key";

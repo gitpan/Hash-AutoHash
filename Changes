@@ -1,7 +1,14 @@
 Revision history for Hash-AutoHash
 
-1.00    2009-10-26
-        First version, released on an unsuspecting world.
+1.10    2009-10-30
+	This should be stable release assuming CPAN testers find no problems
+        Refactored perl 5.10 dependent test code
+	Reversed order of revisions in this file
+	
+1.02	2009-10-29
+	Documentation changes only. 
+	  Changed module names AVP_Single, AVP_Multi to AVPairsSingle, AVPairsMulti
+          in SEE ALSO to better match CPAN naming style
 
 1.01	2009-10-28
 	Fixed 'make test' - bug found by CPAN testers.
@@ -9,8 +16,7 @@ Revision history for Hash-AutoHash
 	Added DOES to special methods delegated to base class. Needed for perl 5.10, since
 	  DOES added to methods inherited from UNIVERSAL.
 
-1.02	2009-10-29
-	Documentation changes only. 
-	  Changed module names AVP_Single, AVP_Multi to AVPairsSingle, AVPairsMulti
-          in SEE ALSO to better match CPAN naming style
+1.00    2009-10-26
+        First version, released on an unsuspecting world.
+
 

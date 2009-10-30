@@ -1,6 +1,7 @@
 use lib qw(t);
 use strict;
 use Carp;
+use Test::More;
 use Exporter();
 use autohashUtil;
 our @ISA=qw(Exporter);
