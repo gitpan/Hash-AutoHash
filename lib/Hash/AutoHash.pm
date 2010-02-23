@@ -1,5 +1,5 @@
 package Hash::AutoHash;
-our $VERSION='1.10';
+our $VERSION='1.11';
 
 #################################################################################
 #
@@ -580,7 +580,7 @@ Hash::AutoHash - Object-oriented access to real and tied hashes
 
 =head1 VERSION
 
-Version 1.10
+Version 1.11
 
 =head1 SYNOPSIS
 
@@ -647,8 +647,7 @@ allows a modular division of labor: this class is generic and treats
 all hashes the same; any special semantics come from the tied hash.
 
 The class has a 'new' method but also supplies several functions for
-constructing new Hash::AutoHash objects.  Except in the simplest
-cases, we recommend using the constructor functions rather than 'new'.
+constructing new Hash::AutoHash objects.
 
 The constructor functions shown in the SYNOPSIS are all you need for
 typical uses.  autohash_hash creates a new 'real' (ie, not tied)
@@ -838,18 +837,16 @@ the code accesses the hash element named 'new'.
 
 =head2 Constructors
 
-We recommend the use of constructor functions rather than 'new' which
-is simply a front-end for the constructor functions. To use these
-functions, you must import them into the caller's namespace using the
-common Perl idiom of listing the desired functions in a 'use'
-statement.
+Hash::AutoHash provides a number of constructor functions as well as a
+'new' method which is simply a front-end for the constructor
+functions. To use the constructor functions, you must import them into
+the caller's namespace using the common Perl idiom of listing the
+desired functions in a 'use' statement.
 
-=head3 Typical usage
+ use Hash::AutoHash qw(autohash_hash autohash_tie autohash_wrap autohash_wrapobj
+                       autohash_wraptie autohash_new);
 
-In typical cases, the two constructor functions described in this
-section are all that are needed.
-
- use Hash::AutoHash qw(autohash_hash autohash_tie);
+=head3 autohash_hash
 
  Title   : autohash_hash
  Usage   : $autohash=autohash_hash name=>'Joe',hobbies=>['hiking','cooking']
@@ -857,6 +854,8 @@ section are all that are needed.
            optionally set its initial value
  Returns : Hash::AutoHash object
  Args    : Optional list of key=>value pairs
+
+=head3 autohash_tie
 
  Title   : autohash_tie
  Usage   : $autohash=autohash_tie Tie::Hash::MultiValue
@@ -898,7 +897,7 @@ tied object, a process we call wrapping. Once the linkage is made, the
 contents of the object and hash will be identical; any changes made to
 one will be reflected in the other.
 
- use Hash::AutoHash qw(autohash_wrap autohash_wrapobj autohash_wraptie);
+=head4 autohash_wrap
 
  Title   : autohash_wrap
  Usage   : $autohash=autohash_wrap %hash,name=>'Joe',hobbies=>['hiking','cooking']
@@ -915,6 +914,8 @@ one will be reflected in the other.
            constructed object will be tied to an object of type 
            Hash::AutoHash::dup which implements the linking.
 
+=head4 autohash_wrapobj
+
  Title   : autohash_wrapobj
  Usage   : $autohash=autohash_wrapobj $tied_object,name=>'Joe',hobbies=>'hiking'
  Function: Create a Hash::AutoHash object linked to a tied hash given 
@@ -927,16 +928,20 @@ one will be reflected in the other.
  Args    : Object implementing a tied hash and optional list of key=>value 
            pairs. The key=>value pairs set further elements of the object (and 
            hash).
- Notes   : Here is another, perhaps more typical, illustration of this function.
-           $autohash=autohash_wrapobj tie %hash,'Tie::Hash::MultiValue'
 
-           You can set initial values in the constructed object by including
-           them as parameters to the function, using parentheses to keep them 
-           separate from the parameters to 'tie'.  All the parentheses in the 
-           example below are necessary.
-           $autohash=autohash_wrapobj ((tie %hash,'Tie::Hash::MultiValue'),
-                                       name=>'Joe',
-                                       hobbies=>'hiking',hobbies=>'cooking')
+Here is another, perhaps more typical, illustration of autohash_wrapobj.
+
+  $autohash=autohash_wrapobj tie %hash,'Tie::Hash::MultiValue'
+
+You can set initial values in the constructed object by including them
+as parameters to the function, using parentheses to keep them separate
+from the parameters to 'tie'.  All the parentheses in the example
+below are necessary.
+
+  $autohash=autohash_wrapobj ((tie %hash,'Tie::Hash::MultiValue'),
+                              name=>'Joe',hobbies=>'hiking',hobbies=>'cooking')
+
+=head4 autohash_wraptie
 
  Title   : autohash_wraptie
  Usage   : $autohash=autohash_wraptie %hash,Tie::Hash::MultiValue
@@ -949,14 +954,11 @@ one will be reflected in the other.
  Notes   : This is equivalent to
            $autohash=autohash_wrapobj tie %hash,'Tie::Hash::MultiValue'
 
-=head2 'new' method and autohash_new function
+=head3 new
 
-The class provides a 'new' method mainly because programmers expect
-it, and an equivalent autohash_new function for stylistic
-consistency. 'new' and autohash_new are front-ends to the other
-constructor functions. To accommodate the diversity of the other
-functions, the parameter syntax makes some assumptions and is not
-completely general.
+'new' and L<autohash_new> are front-ends to the other constructor
+functions. To accommodate the diversity of the other functions, the
+parameter syntax makes some assumptions and is not completely general.
 
  Title   : new 
  Usage   : $autohash=new Hash::AutoHash 
@@ -997,7 +999,12 @@ completely general.
              class implementing the tied hash (quotes are required) followed by
              additional parameters for the the TIEHASH constructor.
 
- use Hash::AutoHash qw(autohash_new);
+=head3 autohash_new
+
+Like L<new>, autohash_new is a front-end to the other constructor
+functions. We provide it for stylistic consistency. To accommodate the
+diversity of the other functions, the parameter syntax makes some
+assumptions and is not completely general.
 
  Title   : autohash_new 
  Usage   : $autohash=autohash_new name=>'Joe',hobbies=>['hiking','cooking']
@@ -1017,7 +1024,7 @@ Function: same as 'new'
  Returns : Hash::AutoHash object
  Args    : same as 'new'
 
-=head2 Aliasing
+=head2 Aliasing: autohash_alias
 
 You can alias a Hash::AutoHash object to a regular hash to
 avoid the need to dereference the variable when using hash
@@ -1074,15 +1081,21 @@ repeatedly.
   my @keys=keys %hash;          # instead of keys %$autohash
 
 The class also provides two functions for wholesale manipulation of
-arguments.
+arguments.  To use these functions, you must import them into the
+caller's namespace using the common Perl idiom of listing the desired
+functions in a 'use' statement.
 
  use Hash::AutoHash qw(autohash_get autohash_set);
+
+=head3 autohash_get
  
  Title   : autohash_get
  Usage   : ($name,$hobbies)=autohash_get($autohash,qw(name hobbies))
  Function: Get values for multiple keys.
  Args    : Hash::AutoHash object and list of keys
  Returns : list of argument values
+
+=head3 autohash_set
 
  Title   : autohash_set
  Usage   : autohash_set($autohash,name=>'Joe Plumber',first_name=>'Joe')
@@ -1097,12 +1110,16 @@ arguments.
 
 These functions provide hash-like operations on Hash::AutoHash
 objects. These are useful if you want to avoid hash notation all
-together.
+together. To use these functions, you must import them into the
+caller's namespace using the common Perl idiom of listing the desired
+functions in a 'use' statement.
 
  use Hash::AutoHash 
     qw(autohash_clear autohash_delete autohash_each autohash_exists 
        autohash_keys autohash_values 
        autohash_count autohash_empty autohash_notempty);
+
+=head3 autohash_clear
 
  Title   : autohash_clear
  Usage   : autohash_clear($autohash)
@@ -1110,17 +1127,23 @@ together.
  Args    : Hash::AutoHash object
  Returns : nothing
 
+=head3 autohash_delete
+
  Title   : autohash_delete
  Usage   : autohash_delete($autohash,@keys)
  Function: Delete keys and their values from $autohash.
  Args    : Hash::AutoHash object, list of keys
  Returns : nothing
 
+=head3 autohash_exists
+
  Title   : autohash_exists
  Usage   : if (autohash_exists($autohash,$key)) { ... }
  Function: Test whether key is present in $autohash.
  Args    : Hash::AutoHash object, key
  Returns : boolean
+
+=head3 autohash_each
 
  Title   : autohash_each
  Usage   : while (my($key,$value)=autohash_each($autohash)) { ... }
@@ -1131,11 +1154,15 @@ together.
  Returns : list context: next key=>value pair in $autohash or empty list at end
            scalar context: next key in $autohash or undef at end
 
+=head3 autohash_keys
+
  Title   : autohash_keys
  Usage   : @keys=autohash_keys($autohash)
  Function: Get all keys that are present in $autohash
  Args    : Hash::AutoHash object
  Returns : list of keys
+
+=head3 autohash_values
 
  Title   : autohash_values
  Usage   : @values=autohash_values($autohash)
@@ -1143,11 +1170,15 @@ together.
  Args    : Hash::AutoHash object
  Returns : list of values
 
+=head3 autohash_count
+
  Title   : autohash_count
  Usage   : $count=autohash_count($autohash)
  Function: Get the number keys that are present in $autohash
  Args    : Hash::AutoHash object
  Returns : number
+
+=head3 autohash_empty
 
  Title   : autohash_empty
  Usage   : if (autohash_empty($autohash)) { ... }
@@ -1155,13 +1186,15 @@ together.
  Args    : Hash::AutoHash object
  Returns : boolean
 
+=head3 autohash_notempty
+
  Title   : autohash_notempty
  Usage   : if (autohash_notempty($autohash)) { ... }
  Function: Test whether $autohash is not empty. Complement of autohash_empty
  Args    : Hash::AutoHash object
  Returns : boolean
 
-=head2 Accessing the tied object
+=head2 Accessing the tied object: autohash_tied
 
 If a Hash::AutoHash object is tied, the application sometimes needs to
 access the object implementing the underlying tied hash.  The term

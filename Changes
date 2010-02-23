@@ -1,5 +1,8 @@
 Revision history for Hash-AutoHash
 
+1.11    2010-02-23
+	Documentation changes only
+
 1.10    2009-10-30
 	This should be stable release assuming CPAN testers find no problems
         Refactored perl 5.10 dependent test code
