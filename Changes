@@ -1,7 +1,14 @@
 Revision history for Hash-AutoHash
 
+1.12    2010-03-01
+	Added perl 5.8.3 as prerequisite. needed by autohash_empty and 
+	  autohash_notempty when operating on a tied hash. these functions test
+	  for emptiness by referencing the hash in scalar context. this doesn't
+	  work in perls prior to 5.8.3. thanks to CPAN smoke testers for
+	  finding this!
+
 1.11    2010-02-23
-	Documentation changes only
+	Minor documentation cleanup and reformatting
 
 1.10    2009-10-30
 	This should be stable release assuming CPAN testers find no problems

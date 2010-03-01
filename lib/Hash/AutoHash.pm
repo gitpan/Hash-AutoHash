@@ -1,5 +1,5 @@
 package Hash::AutoHash;
-our $VERSION='1.11';
+our $VERSION='1.12';
 
 #################################################################################
 #
@@ -580,7 +580,7 @@ Hash::AutoHash - Object-oriented access to real and tied hashes
 
 =head1 VERSION
 
-Version 1.11
+Version 1.12
 
 =head1 SYNOPSIS
 

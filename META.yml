@@ -1,6 +1,6 @@
 ---
 name: Hash-AutoHash
-version: 1.11
+version: 1.12
 author:
   - 'Nat Goodman <natg@shore.net>'
 abstract: Object-oriented access to real and tied hashes
@@ -18,12 +18,13 @@ requires:
   Scalar::Util: 1.01
   Tie::Hash: 1
   Tie::ToObject: 0
+  perl: v5.8.3
 configure_requires:
   Module::Build: 0.34
 provides:
   Hash::AutoHash:
     file: lib/Hash/AutoHash.pm
-    version: 1.11
+    version: 1.12
   Hash::AutoHash::alias:
     file: lib/Hash/AutoHash.pm
   Hash::AutoHash::helper:

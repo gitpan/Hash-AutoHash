@@ -49,6 +49,7 @@ my $builder = $class->new
 		      'List::MoreUtils' => 0.09,
 		      'Tie::Hash' => 1.00,
 		      'Tie::ToObject' => 0,
+		      perl => '5.8.3',
 		     },
    add_to_cleanup      => [ 'Hash-AutoHash-*' ],
    create_makefile_pl => 'passthrough',
