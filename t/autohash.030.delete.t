@@ -67,7 +67,7 @@ sub test_delete_extobj {
 
 my $constructor='autohash_new (real)';
 for(my $i=0; $i<=3; $i++) {
-  for my $test qw(func ashash) {
+  for my $test(qw(func ashash)) {
     undef $autohash; undef $object; untie %hash; undef %hash;
     my $sub="test_delete_$test";
     $autohash=autohash_new @INITIAL_VALUES;
@@ -76,7 +76,7 @@ for(my $i=0; $i<=3; $i++) {
   }}
 my $constructor='autohash_new (tie)';
 for(my $i=0; $i<=3; $i++) {
-  for my $test qw(func ashash) {
+  for my $test(qw(func ashash)) {
     undef $autohash; undef $object; untie %hash; undef %hash;
     my $sub="test_delete_$test";
     $autohash=autohash_new ['TieMV'],@INITIAL_VALUES;
@@ -85,7 +85,7 @@ for(my $i=0; $i<=3; $i++) {
   }}
 my $constructor='autohash_new (wrap real)';
 for(my $i=0; $i<=3; $i++) {
-  for my $test qw(func ashash exthash) {
+  for my $test(qw(func ashash exthash)) {
     undef $autohash; undef $object; untie %hash; undef %hash;
     my $sub="test_delete_$test";
     $autohash=autohash_new \%hash,@INITIAL_VALUES;
@@ -94,7 +94,7 @@ for(my $i=0; $i<=3; $i++) {
   }}
 my $constructor='autohash_new (wrap tied)';
 for(my $i=0; $i<=3; $i++) {
-   for my $test qw(func ashash exthash extobj) {
+   for my $test(qw(func ashash exthash extobj)) {
     undef $autohash; undef $object; untie %hash; undef %hash;
     my $sub="test_delete_$test";
     $object=tie %hash,'TieMV';
@@ -104,7 +104,7 @@ for(my $i=0; $i<=3; $i++) {
   }}
 my $constructor='autohash_new (wrap object)';
 for(my $i=0; $i<=3; $i++) {
-   for my $test qw(func ashash exthash extobj) {
+   for my $test(qw(func ashash exthash extobj)) {
     undef $autohash; undef $object; untie %hash; undef %hash;
     my $sub="test_delete_$test";
     $object=tie %hash,'TieMV';
@@ -114,7 +114,7 @@ for(my $i=0; $i<=3; $i++) {
   }}
 my $constructor='autohash_new (wraptie)';
 for(my $i=0; $i<=3; $i++) {
-   for my $test qw(func ashash exthash extobj) {
+   for my $test(qw(func ashash exthash extobj)) {
     undef $autohash; undef $object; untie %hash; undef %hash;
     my $sub="test_delete_$test";
     $autohash=autohash_new [\%hash,'TieMV'],@INITIAL_VALUES;
@@ -125,7 +125,7 @@ for(my $i=0; $i<=3; $i++) {
 
 my $constructor='autohash_hash';
 for(my $i=0; $i<=3; $i++) {
-  for my $test qw(func ashash) {
+  for my $test(qw(func ashash)) {
     undef $autohash; undef $object; untie %hash; undef %hash;
     my $sub="test_delete_$test";
     $autohash=autohash_hash @INITIAL_VALUES;
@@ -134,7 +134,7 @@ for(my $i=0; $i<=3; $i++) {
   }}
 my $constructor='autohash_tie';
 for(my $i=0; $i<=3; $i++) {
-  for my $test qw(func ashash) {
+  for my $test(qw(func ashash)) {
     undef $autohash; undef $object; untie %hash; undef %hash;
     my $sub="test_delete_$test";
     $autohash=autohash_tie TieMV,@INITIAL_VALUES;
@@ -143,7 +143,7 @@ for(my $i=0; $i<=3; $i++) {
   }}
 my $constructor='autohash_wrap (real)';
 for(my $i=0; $i<=3; $i++) {
-  for my $test qw(func ashash exthash) {
+  for my $test(qw(func ashash exthash)) {
     undef $autohash; undef $object; untie %hash; undef %hash;
     my $sub="test_delete_$test";
     $autohash=autohash_wrap %hash,@INITIAL_VALUES;
@@ -152,7 +152,7 @@ for(my $i=0; $i<=3; $i++) {
   }}
 my $constructor='autohash_wrap (tied)';
 for(my $i=0; $i<=3; $i++) {
-   for my $test qw(func ashash exthash extobj) {
+   for my $test(qw(func ashash exthash extobj)) {
      undef $autohash; undef $object; untie %hash; undef %hash;
      my $sub="test_delete_$test";
      $object=tie %hash,'TieMV';
@@ -162,7 +162,7 @@ for(my $i=0; $i<=3; $i++) {
   }}
 my $constructor='autohash_wrapobj';
 for(my $i=0; $i<=3; $i++) {
-   for my $test qw(func ashash exthash extobj) {
+   for my $test(qw(func ashash exthash extobj)) {
      undef $autohash; undef $object; untie %hash; undef %hash;
      my $sub="test_delete_$test";
      $object=tie %hash,'TieMV';
@@ -172,7 +172,7 @@ for(my $i=0; $i<=3; $i++) {
    }}
 my $constructor='autohash_wraptie';
 for(my $i=0; $i<=3; $i++) {
-   for my $test qw(func ashash exthash extobj) {
+   for my $test(qw(func ashash exthash extobj)) {
      undef $autohash; undef $object; untie %hash; undef %hash;
      my $sub="test_delete_$test";
      $autohash=autohash_wraptie %hash,TieMV,@INITIAL_VALUES;

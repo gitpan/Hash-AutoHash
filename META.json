@@ -1,0 +1,62 @@
+{
+   "abstract" : "Object-oriented access to real and tied hashes",
+   "author" : [
+      "Nat Goodman <natg@shore.net>"
+   ],
+   "dynamic_config" : 1,
+   "generated_by" : "Module::Build version 0.4, CPAN::Meta::Converter version 2.112150",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Hash-AutoHash",
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "Exporter" : 0,
+            "Test::Deep" : 0,
+            "Test::More" : "0.88",
+            "Tie::Hash::MultiValue" : 0
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "Module::Build" : "0.4"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Carp" : 0,
+            "List::MoreUtils" : "0.09",
+            "Scalar::Util" : "1.01",
+            "Tie::Hash" : "1",
+            "Tie::ToObject" : 0,
+            "perl" : "v5.8.3"
+         }
+      }
+   },
+   "provides" : {
+      "Hash::AutoHash" : {
+         "file" : "lib/Hash/AutoHash.pm",
+         "version" : "1.13"
+      },
+      "Hash::AutoHash::alias" : {
+         "file" : "lib/Hash/AutoHash.pm",
+         "version" : 0
+      },
+      "Hash::AutoHash::helper" : {
+         "file" : "lib/Hash/AutoHash.pm",
+         "version" : 0
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "license" : [
+         "http://dev.perl.org/licenses/"
+      ]
+   },
+   "version" : "1.13"
+}
