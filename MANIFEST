@@ -19,6 +19,7 @@ t/autohash.019.export_ok.t
 t/autohash.01x.constructors.pm
 t/autohash.020.class_methods.t
 t/autohash.020.special_keys.t
+t/autohash.020.universal.t
 t/autohash.030.alias.t
 t/autohash.030.clear.t
 t/autohash.030.count_etc.t

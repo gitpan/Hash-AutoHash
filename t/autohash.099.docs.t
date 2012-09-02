@@ -174,13 +174,14 @@ for my $key (@keys) {
 }
 cmp_deeply(as_hash($autohash),{name=>'Joe',hobbies=>'kayaking'},'after deleting undef values');
 
-# Keeping the namespace clean
+# NG 12-09-02. No longer possible to use methods innherited from UNIVERSAL
+# # Keeping the namespace clean
 
-ok(can Hash::AutoHash('import'),'canindirect syntax');
-ok(Hash::AutoHash->can('import'),'can -> syntax');
+# ok(can Hash::AutoHash('import'),'can indirect syntax');
+# ok(Hash::AutoHash->can('import'),'can -> syntax');
 
-$autohash->can('import');
-cmp_deeply(as_hash($autohash),{name=>'Joe',hobbies=>'kayaking',can=>'import'},'can object method');
+# $autohash->can('import');
+# cmp_deeply(as_hash($autohash),{name=>'Joe',hobbies=>'kayaking',can=>'import'},'can object method');
 
 my $autohash=new Hash::AutoHash(name=>'Joe');
 cmp_deeply(as_hash($autohash),{name=>'Joe'},'new class method');

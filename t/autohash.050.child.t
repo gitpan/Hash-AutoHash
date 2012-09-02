@@ -35,7 +35,7 @@ cmp_set(\@Child::SUBCLASS_EXPORT_OK,\@subclass_export_ok,'Child @SUBCLASS_EXPORT
 cmp_deeply(\%Child::EXPORT_OK,\%export_ok,'Child %EXPORT_OK');
 
 #################################################################################
-# test Child class methods
+# test Child UNIVERSAL methods
 #################################################################################
 my $child=new Child;
 ok($child,'Child new');
@@ -46,6 +46,10 @@ my $can=can Child('child_method');
 ok($can,'Child can: child_method');
 my $can=can Child('not_defined');
 ok(!$can,'Child can: can\'t');
+my $can=$child->can('can');
+ok($can,'Child object can: can');
+my $can=$child->can('not_defined');
+ok(!$can,'Child object can: can\'t');
 
 my $isa=isa Child('Child');
 ok($isa,'Child isa: is Child');
@@ -55,9 +59,10 @@ my $isa=isa Child('UNIVERSAL');
 ok($isa,'Child isa: is UNIVERSAL');
 my $isa=isa Child('not_defined');
 ok(!$isa,'Child isa: isn\'t');
-
-my $version=VERSION Child;
-is($version,$Child::VERSION,'Child VERSION');
+my $isa=$child->isa('Child');
+ok($isa,'Child object isa: is Child');
+my $isa=$child->isa('not_defined');
+ok(!$isa,'Child object isa: isn\'t');
 
 # Test DOES in perls > 5.10. 
 # Note: $^V returns real string in perls > 5.10, and v-string in earlier perls
@@ -65,14 +70,22 @@ is($version,$Child::VERSION,'Child VERSION');
 my($perl_main,$perl_minor)=$^V=~/^v(\d+)\.(\d+)/; # perl version
 if ($perl_main==5 && $perl_minor>=10) {
   my $does=DOES Child('Child');
-  is($does,1,'DOES: is Child');
+  is($does,1,'Child DOES: is Child');
   my $does=DOES Child('Hash::AutoHash');
   ok($does,'Child DOES: is Hash::AutoHash');
   my $does=DOES Child('UNIVERSAL');
-  is($does,1,'DOES: is UNIVERSAL');
+  is($does,1,'Child DOES: is UNIVERSAL');
   my $does=DOES Child('not_defined');
-  ok(!$does,'DOES: doesn\'t');
+  ok(!$does,'Child DOES: doesn\'t');
+  my $does=$child->DOES('Child');
+  is($does,1,'Child object DOES: is Child');
+  my $does=$child->DOES('not_defined');
+  ok(!$does,'Child object DOES: doesn\'t');
 }
+
+my $version=VERSION Child;
+is($version,$Child::VERSION,'Child VERSION');
+is($child->VERSION,$version,'Child object VERSION');
 
 import Child qw(autohash_new);
 # NOTE: $autohash used as global in autohashUtil test functions. do NOT 'my' it!!
@@ -119,6 +132,7 @@ is($autohash->child_method,'child method','Child: real child method');
 #################################################################################
 # test Child special keys
 #################################################################################
-test_subclass_special_keys(Child);
-
+# test_subclass_special_keys(Child);
+test_special_keys(new Child);
+ 
 done_testing();

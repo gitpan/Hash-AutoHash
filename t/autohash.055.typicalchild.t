@@ -3,6 +3,7 @@ use lib qw(t);
 use strict;
 use Carp;
 use Test::More;
+use List::MoreUtils qw(uniq);
 # use Test::Deep;               # CAUTION: Test::Deep defines 'isa'. breaks 'isa' tests below
 # use Tie::Hash::MultiValue;	# an example tied hash class
 use autohashUtil;
@@ -17,7 +18,7 @@ my $child_class='TypicalChild';
 # ok($autohash && (ref($autohash) eq $autohash_class),'import autohash function via base class');
 
 #################################################################################
-# test TypicalChild class methods
+# test TypicalChild UNIVERSAL methods
 #################################################################################
 my $child=new TypicalChild;
 ok($child,'TypicalChild new');
@@ -28,6 +29,10 @@ my $can=can TypicalChild('new');
 ok($can,'TypicalChild can: new');
 my $can=can TypicalChild('not_defined');
 ok(!$can,'TypicalChild can: can\'t');
+my $can=$child->can('can');
+ok($can,'TypicalChild object can: can');
+my $can=$child->can('not_defined');
+ok(!$can,'TypicalChild object can: can\'t');
 
 my $isa=isa TypicalChild('TypicalChild');
 ok($isa,'TypicalChild isa: is TypicalChild');
@@ -37,6 +42,10 @@ my $isa=isa TypicalChild('UNIVERSAL');
 ok($isa,'TypicalChild isa: is UNIVERSAL');
 my $isa=isa TypicalChild('not_defined');
 ok(!$isa,'TypicalChild isa: isn\'t');
+my $isa=$child->isa('TypicalChild');
+ok($isa,'TypicalChild object isa: is TypicalChild');
+my $isa=$child->isa('not_defined');
+ok(!$isa,'TypicalChild object isa: isn\'t');
 
 # Test DOES in perls > 5.10. 
 # Note: $^V returns real string in perls > 5.10, and v-string in earlier perls
@@ -44,17 +53,22 @@ ok(!$isa,'TypicalChild isa: isn\'t');
 my($perl_main,$perl_minor)=$^V=~/^v(\d+)\.(\d+)/; # perl version
 if ($perl_main==5 && $perl_minor>=10) {
   my $does=DOES TypicalChild('TypicalChild');
-  is($does,1,'DOES: is TypicalChild');
+  is($does,1,'TypicalChild DOES: is TypicalChild');
   my $does=DOES TypicalChild('Hash::AutoHash');
   ok($does,'TypicalChild DOES: is Hash::AutoHash');
   my $does=DOES TypicalChild('UNIVERSAL');
-  is($does,1,'DOES: is UNIVERSAL');
+  is($does,1,'TypicalChild DOES: is UNIVERSAL');
   my $does=DOES TypicalChild('not_defined');
-  ok(!$does,'DOES: doesn\'t');
+  ok(!$does,'TypicalChild DOES: doesn\'t');
+  my $does=$child->DOES('TypicalChild');
+  is($does,1,'TypicalChild object DOES: is TypicalChild');
+  my $does=$child->DOES('not_defined');
+  ok(!$does,'TypicalChild object DOES: doesn\'t');
 }
 
 my $version=VERSION TypicalChild;
 is($version,$TypicalChild::VERSION,'TypicalChild VERSION');
+is($child->VERSION,$version,'TypicalChild object VERSION');
 
 my @imports=
   map {my $copy=$_; $copy=~s/^autohash/typicalchild/; $copy} 
@@ -76,38 +90,42 @@ cmp_autohash('TypicalChild: 1st values',[undef,['value11','value12'],['value21',
 #################################################################################
 # test TypicalChild special keys
 #################################################################################
-use Test::Deep;	 # do it here to avoid breaking 'isa' tests above
-{		 # used nested block to avoid global variables
-  my @keys;
-  {
-    no strict 'refs';
-    @keys=(qw(import new can isa DOES VERSION AUTOLOAD DESTROY),
-	   @Hash::AutoHash::EXPORT_OK,@imports);  
-  }
-  my $child=new TypicalChild;
-  my(@ok,@fail);
-  for my $key (@keys) {
-    my $value="value_$key";
-    $child->$key($value);	# set value
-    my $actual=$child->$key;	# get value
-#    (scalar(@$actual)==1 && $actual->[0] eq $value)? push(@ok,$key): push(@fail,$key);
-    eq_deeply($actual,[$value])? push(@ok,$key): push(@fail,$key);
-  }
-  # like 'report'
-  my $label="TypicalChild special keys";
-  unless (@fail) {
-#     pass("$label. keys=@keys");
-    pass($label);
-  } else {
-    fail($label);
-    diag(scalar(@ok)." keys have correct values: @ok");
-    diag(scalar(@fail)." keys have wrong values: @fail");
-  }
-}
+test_special_keys(new TypicalChild,1,sub {[$_[0]]});
+
+# use Test::Deep;	 # do it here to avoid breaking 'isa' tests above
+# {		 # used nested block to avoid global variables
+#   my @keys;
+#   {
+#     no strict 'refs';
+#     @keys=uniq(@COMMON_SPECIAL_KEYS,
+# 	       # qw(import new can isa DOES VERSION AUTOLOAD DESTROY),
+# 	       @Hash::AutoHash::EXPORT_OK,@imports);  
+#   }
+#   my $child=new TypicalChild;
+#   my(@ok,@fail);
+#   for my $key (@keys) {
+#     my $value="value_$key";
+#     $child->$key($value);	# set value
+#     my $actual=$child->$key;	# get value
+# #    (scalar(@$actual)==1 && $actual->[0] eq $value)? push(@ok,$key): push(@fail,$key);
+#     eq_deeply($actual,[$value])? push(@ok,$key): push(@fail,$key);
+#   }
+#   # like 'report'
+#   my $label="TypicalChild special keys";
+#   unless (@fail) {
+# #     pass("$label. keys=@keys");
+#     pass($label);
+#   } else {
+#     fail($label);
+#     diag(scalar(@ok)." keys have correct values: @ok");
+#     diag(scalar(@fail)." keys have wrong values: @fail");
+#   }
+# }
 
 #################################################################################
 # test TypicalChild exported functions
 #################################################################################
+use Test::Deep;	 # do it here to avoid breaking 'isa' tests above
 my $child=new TypicalChild (key1=>'value11',key2=>'value21');
 
 my($actual)=typicalchild_get($child,'key1');

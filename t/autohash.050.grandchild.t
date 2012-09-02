@@ -52,6 +52,10 @@ my $can=can Grandchild('grandchild_method');
 ok($can,'Grandchild can: grandchild_method');
 my $can=can Grandchild('not_defined');
 ok(!$can,'Grandchild can: can\'t');
+my $can=$grandchild->can('can');
+ok($can,'Grandchild object can: can');
+my $can=$grandchild->can('not_defined');
+ok(!$can,'Grandchild object can: can\'t');
 
 my $isa=isa Grandchild('Grandchild');
 ok($isa,'Grandchild isa: is Grandchild');
@@ -63,6 +67,10 @@ my $isa=isa Grandchild('UNIVERSAL');
 ok($isa,'Grandchild isa: is UNIVERSAL');
 my $isa=isa Grandchild('not_defined');
 ok(!$isa,'Grandchild isa: isn\'t');
+my $isa=$grandchild->isa('Grandchild');
+ok($isa,'Grandchild object isa: is Grandchild');
+my $isa=$grandchild->isa('not_defined');
+ok(!$isa,'Grandchild object isa: isn\'t');
 
 # Test DOES in perls > 5.10. 
 # Note: $^V returns real string in perls > 5.10, and v-string in earlier perls
@@ -70,19 +78,24 @@ ok(!$isa,'Grandchild isa: isn\'t');
 my($perl_main,$perl_minor)=$^V=~/^v(\d+)\.(\d+)/; # perl version
 if ($perl_main==5 && $perl_minor>=10) {
   my $does=DOES Grandchild('Grandchild');
-  is($does,1,'DOES: is Grandchild');
+  is($does,1,'Grandchild DOES: is Grandchild');
   my $does=DOES Grandchild('Grandchild');
-  is($does,1,'DOES: is Grandchild');
+  is($does,1,'Grandchild DOES: is Grandchild');
   my $does=DOES Grandchild('Hash::AutoHash');
   ok($does,'Grandchild DOES: is Hash::AutoHash');
   my $does=DOES Grandchild('UNIVERSAL');
-  is($does,1,'DOES: is UNIVERSAL');
+  is($does,1,'Grandchild DOES: is UNIVERSAL');
   my $does=DOES Grandchild('not_defined');
-  ok(!$does,'DOES: doesn\'t');
+  ok(!$does,'Grandchild DOES: doesn\'t');
+  my $does=$grandchild->DOES('Grandchild');
+  is($does,1,'Grandchild object DOES: is Grandchild');
+  my $does=$grandchild->DOES('not_defined');
+  ok(!$does,'Grandchild object DOES: doesn\'t');
 }
 
 my $version=VERSION Grandchild;
 is($version,$Grandchild::VERSION,'Grandchild VERSION');
+is($grandchild->VERSION,$version,'Grandchild object VERSION');
 
 import Grandchild qw(autohash_new);
 # NOTE: $autohash used as global in autohashUtil test functions. do NOT 'my' it!!
@@ -142,6 +155,7 @@ is($autohash->grandchild_method,'grandchild method','Grandchild: real grandchild
 #################################################################################
 # test Grandchild special keys
 #################################################################################
-test_subclass_special_keys(Grandchild);
+# test_subclass_special_keys(Grandchild);
+test_special_keys(new Grandchild);
 
 done_testing();

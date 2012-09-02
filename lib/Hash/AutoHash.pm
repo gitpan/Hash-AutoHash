@@ -1,5 +1,5 @@
 package Hash::AutoHash;
-our $VERSION='1.13';
+our $VERSION='1.14';
 $VERSION=eval $VERSION;		# I think this is the accepted idiom..
 
 #################################################################################
@@ -63,47 +63,50 @@ sub new {
   my $helper_class=$class_or_self.'::helper';
   $helper_class->_new($class_or_self,@_);
 }
-sub can {
-  my $class_or_self=shift;
-  if (ref $class_or_self) { 
-    # called as object method. access hash slot via AUTOLOAD
-    $AUTOLOAD='can';
-    return $class_or_self->AUTOLOAD(@_);
-  }
-  # called as class method. do regular 'can' via base class
-  return $class_or_self->SUPER::can(@_);
-}
-sub isa {
-  my $class_or_self=shift;
-  if (ref $class_or_self) { 
-    # called as object method. access hash slot via AUTOLOAD
-    $AUTOLOAD='isa';
-    return $class_or_self->AUTOLOAD(@_);
-  }
-  # called as function or class method. do regular 'isa' via base class
-  return $class_or_self->SUPER::isa(@_);
-}
-sub DOES {			# in perl 5.10, UNIVERSAL provides this
-  my $class_or_self=shift;
-  if (ref $class_or_self) { 
-    # called as object method. access hash slot via AUTOLOAD
-    $AUTOLOAD='DOES';
-    return $class_or_self->AUTOLOAD(@_);
-  }
-  # called as function or class method. do regular 'DOES' via base class
-  # illegal and will die in perls < 5.10 
-  return $class_or_self->SUPER::DOES(@_);
-}
-sub VERSION {
-  my $class_or_self=shift;
-  if (ref $class_or_self) { 
-    # called as object method. access hash slot via AUTOLOAD
-    $AUTOLOAD='VERSION';
-    return $class_or_self->AUTOLOAD(@_);
-  }
-  # called as function or class method. do regular 'VERSION' via base class
-  return $class_or_self->SUPER::VERSION(@_);
-}
+# NG 12-09-02: no longer possible to use method notation for keys with same names as methods
+#              inherited from UNIVERSAL. 'Cuz as of Perl 5.9.3, calling UNIVERSAL methods as
+#              functions is deprecated and developers encouraged to use method form instead.
+# sub can {
+#   my $class_or_self=shift;
+#   if (ref $class_or_self) { 
+#     # called as object method. access hash slot via AUTOLOAD
+#     $AUTOLOAD='can';
+#     return $class_or_self->AUTOLOAD(@_);
+#   }
+#   # called as class method. do regular 'can' via base class
+#   return $class_or_self->SUPER::can(@_);
+# }
+# sub isa {
+#   my $class_or_self=shift;
+#   if (ref $class_or_self) { 
+#     # called as object method. access hash slot via AUTOLOAD
+#     $AUTOLOAD='isa';
+#     return $class_or_self->AUTOLOAD(@_);
+#   }
+#   # called as function or class method. do regular 'isa' via base class
+#   return $class_or_self->SUPER::isa(@_);
+# }
+# sub DOES {			# in perl 5.10, UNIVERSAL provides this
+#   my $class_or_self=shift;
+#   if (ref $class_or_self) { 
+#     # called as object method. access hash slot via AUTOLOAD
+#     $AUTOLOAD='DOES';
+#     return $class_or_self->AUTOLOAD(@_);
+#   }
+#   # called as function or class method. do regular 'DOES' via base class
+#   # illegal and will die in perls < 5.10 
+#   return $class_or_self->SUPER::DOES(@_);
+# }
+# sub VERSION {
+#   my $class_or_self=shift;
+#   if (ref $class_or_self) { 
+#     # called as object method. access hash slot via AUTOLOAD
+#     $AUTOLOAD='VERSION';
+#     return $class_or_self->AUTOLOAD(@_);
+#   }
+#   # called as function or class method. do regular 'VERSION' via base class
+#   return $class_or_self->SUPER::VERSION(@_);
+# }
 sub DESTROY  { 
   # CAUTION: do NOT shift - need $_[0] intact
   if (ref($_[0])) {
@@ -581,7 +584,7 @@ Hash::AutoHash - Object-oriented access to real and tied hashes
 
 =head1 VERSION
 
-Version 1.13
+Version 1.14
 
 =head1 SYNOPSIS
 
@@ -673,8 +676,24 @@ And you can add new elements using either notation:
   $autohash->{first_name}='Joe';
   $autohash->last_name('Plumber');
 
-One caution is that when using method notation, keys must be
+CAUTIONS
+
+=over 2
+
+=item * When using method notation, keys must be
 syntactically legal method names and cannot include 'funny' characters.
+
+=item * INCOMPATIBLE CHANGE: As of version 1.14, it is no longer
+possible to use method notation for keys with the same names
+as methods inherited from UNIVERSAL (the base class of
+everything). These are 'can', 'isa', 'DOES', and 'VERSION'.
+The reason is that as of Perl 5.9.3, calling UNIVERSAL
+methods as functions is deprecated and developers are
+encouraged to use method form instead. Previous versions of
+AutoHash are incompatible with CPAN modules that adopt this
+style.
+
+=back
 
 Nested structures work straightforwardly. If a value is a
 Hash::AutoHash object, you can use a series of '->' operators
@@ -772,49 +791,26 @@ object is not tied.
 Hash::AutoHash provides all of its capabilities through class
 methods (these are methods, such as 'new', that are invoked on the
 class rather than on individual objects) or through functions that
-must be imported into the caller's namespace.  Any method invoked on
+must be imported into the caller's namespace.  In most cases, a method invoked on
 an object is interpreted as a request to access or change an element
-of the underlying hash.
+of the underlying hash. 
 
-Special care is needed with methods inherited from UNIVERSAL (the base
-class of everything) and methods used implicitly by Perl to implement
-common features ('import', 'AUTOLOAD', 'DESTROY').
+CAUTION: As of version 1.14, it is not possible to use method
+notation for keys with the same names as methods inherited from
+UNIVERSAL (the base class of everything). These are 'can', 'isa',
+'DOES', and 'VERSION'.  The reason is that as of Perl 5.9.3, calling
+UNIVERSAL methods as functions is deprecated and developers are
+encouraged to use method form instead. Previous versions of AutoHash
+are incompatible with CPAN modules that adopt this style.
 
-UNIVERSAL defines four methods in perl 5.10 -- 'can', 'isa', 'DOES',
-and 'VERSION' -- and three is earlier versions -- 'can', 'isa', and
-'VERSION'.  These are logically class methods, since they give the
-same result for every object in a given class, but the built-in
-implementation allows them to be invoked on objects. We have chosen to
-override the standard implementation: if the method is invoked on a
-class, we pass it to UNIVERSAL, but if it is invoked on an object, we
-interpret it as a request to access or change an element of the hash.
+Special care is needed with methods used implicitly by Perl to
+implement common features ('import', 'AUTOLOAD', 'DESTROY'). 
 
-For example, the following two statements
-
-  can Hash::AutoHash('import')
-  Hash::AutoHash->can('import')
-
-invoke the 'can' method on the class Hash::AutoHash; the code
-notices that the target is a class and forwards the call to the 'can'
-method in UNIVERSAL which tells whether the module has an 'import'
-method (it does).  On the other hand,
-
-  $autohash->can('import')
-
-invokes the 'can' method on the $autohash object (assuming, of course,
-that's what $autohash contains); the code notices that the target is a
-Hash::AutoHash object and sets the value of the hash element 'can'
-to 'import'. 
-
-CAUTION: This will break code that expects the UNIVERSAL methods
-to work in the standard way.  If this proves to be a problem, we
-will provide a way to revert the offending behavior.
-
-Our implementation of 'import' is similar. This method is invoked by
-Perl as a class method when processing 'use' statements. When called
-in this manner, it imports functions into the caller's namespace as
-expected, but when invoked on an object, it accesses the underlying
-hash.
+'import' is usually invoked by Perl as a class method when processing
+'use' statements to import functions into the caller's namespace. We
+preserve this behavior but when invoked on an object, we interpret the
+call as a request to access or change the element of the underlying
+hash whose kye is 'import'.
 
 'AUTOLOAD' and 'DESTROY' pose different problems, since they are
 logically object methods.  Fortunately, Perl leaves enough clues to
@@ -1425,21 +1421,17 @@ progress on your bug as I make changes.
 
 =over 4
 
-=item * Overridden UNIVERSAL methods
+=item * Overridden UNIVERSAL methods no longer supported
 
-Hash::AutoHash overrides all methods inherited from UNIVERSAL (the
-base class of everything), namely 'can', 'isa', 'DOES', and
-'VERSION'. These are logically class methods, since they give the same
-result for every object in a given class, but the built-in
-implementation allows them to be invoked on objects. Our
-implementation treats class and object invocations differently: if the
-method is invoked on a class, we pass it to UNIVERSAL, but if it is
-invoked on an object, we interpret it as a request to access or change
-an element of the underlying hash.
-
-This will break code that expects the UNIVERSAL methods
-to work in the standard way.  If this proves to be a problem, we
-will provide a way to revert the offending behavior.
+INCOMPATIBLE CHANGE: As of version 1.14, it is no longer
+possible to use method notation for keys with the same names
+as methods inherited from UNIVERSAL (the base class of
+everything). These are 'can', 'isa', 'DOES', and 'VERSION'.
+The reason is that as of Perl 5.9.3, calling UNIVERSAL
+methods as functions is deprecated and developers are
+encouraged to use method form instead. Previous versions of
+AutoHash are incompatible with CPAN modules that adopt this
+style.
 
 =item * Tied hashes and serialization
 
