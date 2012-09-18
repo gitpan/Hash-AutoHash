@@ -41,7 +41,7 @@
    "provides" : {
       "Hash::AutoHash" : {
          "file" : "lib/Hash/AutoHash.pm",
-         "version" : "1.14"
+         "version" : "1.15"
       },
       "Hash::AutoHash::alias" : {
          "file" : "lib/Hash/AutoHash.pm",
@@ -58,5 +58,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "1.14"
+   "version" : "1.15"
 }

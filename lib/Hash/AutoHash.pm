@@ -1,5 +1,5 @@
 package Hash::AutoHash;
-our $VERSION='1.14';
+our $VERSION='1.15';
 $VERSION=eval $VERSION;		# I think this is the accepted idiom..
 
 #################################################################################
@@ -152,6 +152,7 @@ sub AUTOLOAD {
 # functions herein (except _new, _autoload) are exportable by Hash::AutoHash
 #################################################################################
 package Hash::AutoHash::helper;
+our $VERSION=$Hash::AutoHash::VERSION;
 use strict;
 use Carp;
 use Scalar::Util qw(blessed readonly reftype);
@@ -566,6 +567,7 @@ sub autohash_untie {
 #   none could connect new variable to old one without changing the type of old
 #################################################################################
 package Hash::AutoHash::alias;
+our $VERSION=$Hash::AutoHash::VERSION;
 use strict;
 use Tie::Hash;
 our @ISA=qw(Tie::ExtraHash);
@@ -584,7 +586,7 @@ Hash::AutoHash - Object-oriented access to real and tied hashes
 
 =head1 VERSION
 
-Version 1.14
+Version 1.15
 
 =head1 SYNOPSIS
 

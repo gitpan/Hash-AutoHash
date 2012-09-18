@@ -1,6 +1,10 @@
 Revision history for Hash-AutoHash
 
-1.14	2012-09-DD
+1.15	2012-09-18
+	Changed version number in helper package for consistency with other
+	  AutoHash modules
+
+1.14	2012-09-02
 	INCOMPATIBLE CHANGE: no longer possible to use method notation for keys
 	  with the same names as methods inherited from UNIVERSAL (the base  
 	  class of everything). These are  'can', 'isa', 'DOES', and 'VERSION'.

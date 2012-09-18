@@ -19,7 +19,7 @@ name: Hash-AutoHash
 provides:
   Hash::AutoHash:
     file: lib/Hash/AutoHash.pm
-    version: 1.14
+    version: 1.15
   Hash::AutoHash::alias:
     file: lib/Hash/AutoHash.pm
     version: 0
@@ -35,4 +35,4 @@ requires:
   perl: v5.8.3
 resources:
   license: http://dev.perl.org/licenses/
-version: 1.14
+version: 1.15
