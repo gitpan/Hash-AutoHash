@@ -3,10 +3,11 @@ abstract: 'Object-oriented access to real and tied hashes'
 author:
   - 'Nat Goodman <natg@shore.net>'
 build_requires:
-  Exporter: 0
-  Test::Deep: 0
+  Exporter: 5.58
+  Test::Deep: 0.11
   Test::More: 0.88
   Tie::Hash::MultiValue: 0
+  perl: v5.17.6
 configure_requires:
   Module::Build: 0.4
 dynamic_config: 1
@@ -19,7 +20,7 @@ name: Hash-AutoHash
 provides:
   Hash::AutoHash:
     file: lib/Hash/AutoHash.pm
-    version: 1.15
+    version: 1.16_01
   Hash::AutoHash::alias:
     file: lib/Hash/AutoHash.pm
     version: 0
@@ -35,4 +36,4 @@ requires:
   perl: v5.8.3
 resources:
   license: http://dev.perl.org/licenses/
-version: 1.15
+version: 1.16_01

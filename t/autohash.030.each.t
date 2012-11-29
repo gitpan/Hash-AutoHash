@@ -80,21 +80,25 @@ sub test_each {
   # as hash
   my @actual;
   while(my $key=each %$autohash) {push(@actual,$key);}
-  cmp_deeply(\@actual,\@correct,"$label each scalar context 1st loop as hash");
+  # cmp_deeply(\@actual,\@correct,"$label each scalar context 1st loop as hash");
+  cmp_set(\@actual,\@correct,"$label each scalar context 1st loop as hash");
   # do it again to make sure iterator resets correctly
   my @actual;
   while(my $key=each %$autohash) {push(@actual,$key);}
-  cmp_deeply(\@actual,\@correct,"$label each scalar context 2nd loop as hash");
+  # cmp_deeply(\@actual,\@correct,"$label each scalar context 2nd loop as hash");
+  cmp_set(\@actual,\@correct,"$label each scalar context 2nd loop as hash");
   #
   # external hash
   if ($ok_hash) {
     my @actual;
     while(my $key=each %hash) {push(@actual,$key);}
-    cmp_deeply(\@actual,\@correct,"$label each scalar context 1st loop as hash");
+    # cmp_deeply(\@actual,\@correct,"$label each scalar context 1st loop as hash");
+    cmp_set(\@actual,\@correct,"$label each scalar context 1st loop as hash");
     # do it again to make sure iterator resets correctly
     my @actual;
     while(my $key=each %hash) {push(@actual,$key);}
-    cmp_deeply(\@actual,\@correct,"$label each scalar context 2nd loop as hash");
+    # cmp_deeply(\@actual,\@correct,"$label each scalar context 2nd loop as hash");
+    cmp_set(\@actual,\@correct,"$label each scalar context 2nd loop as hash");
   } else {			# should be empty
     ok(!%hash,"$label each scalar context external hash empty");
   }
@@ -103,11 +107,13 @@ sub test_each {
   if ($ok_object) {
     my @actual;
     while(my $key=each_obj($object)) {push(@actual,$key);}
-    cmp_deeply(\@actual,\@correct,"$label each scalar context 1st loop as hash");
+    # cmp_deeply(\@actual,\@correct,"$label each scalar context 1st loop as hash");
+    cmp_set(\@actual,\@correct,"$label each scalar context 1st loop as hash");
     # do it again to make sure iterator resets correctly
     my @actual;
     while(my $key=each %hash) {push(@actual,$key);}
-    cmp_deeply(\@actual,\@correct,"$label each scalar context 2nd loop as hash");
+    # cmp_deeply(\@actual,\@correct,"$label each scalar context 2nd loop as hash");
+    cmp_set(\@actual,\@correct,"$label each scalar context 2nd loop as hash");
   } else {			# should be empty
     is($object,undef,"$label each scalar context external object undef");
   }

@@ -1,5 +1,5 @@
 package Hash::AutoHash;
-our $VERSION='1.15';
+our $VERSION='1.16_01';
 $VERSION=eval $VERSION;		# I think this is the accepted idiom..
 
 #################################################################################
@@ -245,7 +245,9 @@ sub EXPORT_OK {
   {
     no strict 'refs';
     $export_ok_list=\@{$class.'::EXPORT_OK'};
-    return @$export_ok_list if defined @$export_ok_list;
+    # NG 12-11-29: 'defined @array' deprecated in 5.16 or so
+    # return @$export_ok_list if defined @$export_ok_list;
+    return @$export_ok_list if @$export_ok_list;
     $export_ok_hash=\%{$class.'::EXPORT_OK'}; 
     @isa=@{$helper_class.'::ISA'};
     @normal_export_ok=@{$class.'::NORMAL_EXPORT_OK'};
@@ -292,7 +294,9 @@ sub SUBCLASS_EXPORT_OK {
   } 
   # for subclasses, @SUBCLASS_EXPORT_OK must be computed
   my $subclass_export_ok=\@{$class.'::SUBCLASS_EXPORT_OK'};
-  return @$subclass_export_ok if defined @$subclass_export_ok;
+  # NG 12-11-29: 'defined @array' deprecated in 5.16 or so
+  # return @$subclass_export_ok if defined @$subclass_export_ok;
+  return @$subclass_export_ok if @$subclass_export_ok;
   return @$subclass_export_ok=$helper_class->EXPORT_OK;
 }
 
@@ -586,7 +590,7 @@ Hash::AutoHash - Object-oriented access to real and tied hashes
 
 =head1 VERSION
 
-Version 1.15
+Version 1.16_01
 
 =head1 SYNOPSIS
 

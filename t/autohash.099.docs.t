@@ -41,7 +41,8 @@ cmp_deeply($hobbies,['go','chess'],'access hobbies via hash');
 $autohash->{name}='Moe';	# name now 'Moe'
 cmp_deeply(as_hash($autohash),{name=>'Moe',hobbies=>['go','chess']},'change element via hash');
 my @values=values %$autohash;	# ('Moe',['go','chess'])
-cmp_bag(\@values,['Moe',['go','chess']],'values');
+# cmp_bag(\@values,['Moe',['go','chess']],'values');
+cmp_set(\@values,['Moe',['go','chess']],'values');
 
 # tied hash. 
 use Hash::AutoHash qw(autohash_tie);
@@ -353,13 +354,16 @@ cmp_deeply(as_hash($autohash),\%hash,'autohash_each array context');
 
 my @keys;
 while (my $key=autohash_each($autohash)) { push(@keys,$key) }
-cmp_deeply(\@keys,['name'],'autohash_each scalar context');
+# cmp_deeply(\@keys,['name'],'autohash_each scalar context');
+cmp_set(\@keys,['name'],'autohash_each scalar context');
 
 my @keys=autohash_keys($autohash);
-cmp_deeply(\@keys,['name'],'autohash_keys');
+# cmp_deeply(\@keys,['name'],'autohash_keys');
+cmp_set(\@keys,['name'],'autohash_keys');
 
 my @values=autohash_values($autohash);
-cmp_deeply(\@values,['Joe'],'autohash_values');
+# cmp_deeply(\@values,['Joe'],'autohash_values');
+cmp_set(\@values,['Joe'],'autohash_values');
 
 my $count=autohash_count($autohash);
 is($count,1,'autohash_count');
