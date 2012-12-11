@@ -16,7 +16,7 @@ Revision history for Hash-AutoHash
 	reason is that as of Perl 5.9.3, calling UNIVERSAL methods as functions 
 	is deprecated and developers are encouraged to use method form instead. 
 	Previous versions of AutoHash are incompatible with CPAN modules that
-	 adopt this style.
+	adopt this style.
 
 1.13	2012-09-01
 	Added test for version number in POD

@@ -19,8 +19,7 @@
             "Exporter" : "5.58",
             "Test::Deep" : "0.11",
             "Test::More" : "0.88",
-            "Tie::Hash::MultiValue" : 0,
-            "perl" : "v5.17.6"
+            "Tie::Hash::MultiValue" : 0
          }
       },
       "configure" : {
@@ -42,7 +41,7 @@
    "provides" : {
       "Hash::AutoHash" : {
          "file" : "lib/Hash/AutoHash.pm",
-         "version" : "1.16_01"
+         "version" : "1.16"
       },
       "Hash::AutoHash::alias" : {
          "file" : "lib/Hash/AutoHash.pm",
@@ -53,11 +52,11 @@
          "version" : 0
       }
    },
-   "release_status" : "testing",
+   "release_status" : "stable",
    "resources" : {
       "license" : [
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "1.16_01"
+   "version" : "1.16"
 }

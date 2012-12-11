@@ -23,7 +23,6 @@ my $builder = $class->new
 		      'Test::Deep' => 0.11,
 		      'Test::More' => 0.88,
 		      'Tie::Hash::MultiValue' => 0,
-		      perl => '5.17.6', # temporarily to smoke out hash randomization bugs...
 		     },
    requires =>       {'Carp' => 0,
 		      'Scalar::Util' => 1.01,

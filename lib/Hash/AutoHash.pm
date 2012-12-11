@@ -1,5 +1,5 @@
 package Hash::AutoHash;
-our $VERSION='1.16_01';
+our $VERSION='1.16';
 $VERSION=eval $VERSION;		# I think this is the accepted idiom..
 
 #################################################################################
@@ -590,7 +590,7 @@ Hash::AutoHash - Object-oriented access to real and tied hashes
 
 =head1 VERSION
 
-Version 1.16_01
+Version 1.16
 
 =head1 SYNOPSIS
 
