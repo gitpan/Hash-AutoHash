@@ -44,5 +44,3 @@ t/autohash.099.docs.t
 t/autohash.TieMV.pm
 t/autohash.TieOptions.pm
 t/autohashUtil.pm
-testrun.log
-testrun.sum
