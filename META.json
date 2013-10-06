@@ -53,7 +53,7 @@
    "provides" : {
       "Hash::AutoHash" : {
          "file" : "lib/Hash/AutoHash.pm",
-         "version" : "1.17_01"
+         "version" : "1.17"
       },
       "Hash::AutoHash::alias" : {
          "file" : "lib/Hash/AutoHash.pm",
@@ -64,11 +64,11 @@
          "version" : 0
       }
    },
-   "release_status" : "testing",
+   "release_status" : "stable",
    "resources" : {
       "license" : [
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "1.17_01"
+   "version" : "1.17"
 }

@@ -28,7 +28,7 @@ name: Hash-AutoHash
 provides:
   Hash::AutoHash:
     file: lib/Hash/AutoHash.pm
-    version: 1.17_01
+    version: 1.17
   Hash::AutoHash::alias:
     file: lib/Hash/AutoHash.pm
     version: 0
@@ -47,4 +47,4 @@ requires:
   perl: v5.8.3
 resources:
   license: http://dev.perl.org/licenses/
-version: 1.17_01
+version: 1.17
